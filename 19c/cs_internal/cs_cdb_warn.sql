@@ -1,0 +1,26 @@
+--==========================================================================
+-- Script    : cs_cdb_warn.sql
+-- Versao    : Oracle Database 19c (19.x)
+-- Uso       : Script de diagnóstico/utilitário Oracle (ver corpo do script
+--             para detalhes).
+-- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
+--==========================================================================
+-- warn if executed from CDB$ROOT
+SET SERVEROUT ON;
+BEGIN
+  IF SYS_CONTEXT('USERENV', 'CON_NAME') = 'CDB$ROOT' THEN
+    DBMS_OUTPUT.put_line(CHR(10));
+    DBMS_OUTPUT.put_line('***');
+    DBMS_OUTPUT.put_line('*** On CDB$ROOT ***');
+    DBMS_OUTPUT.put_line('***');
+    DBMS_OUTPUT.put_line(CHR(10));
+  END IF;
+END;
+/
+SET SERVEROUT OFF;
+BEGIN
+ IF SYS_CONTEXT('USERENV', 'CON_NAME') = 'CDB$ROOT' THEN
+   DBMS_LOCK.sleep(1);
+ END IF;
+END;
+/
