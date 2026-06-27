@@ -1,0 +1,48 @@
+# Dois bancos Oracle locais para validar os cscripts: 19c e 26ai.
+# Apple Silicon: 26ai roda nativo (arm64); 19c roda emulado (linux/amd64 via Rosetta).
+# Habilite no Docker Desktop: Settings > General > "Use Rosetta for x86_64/amd64 emulation".
+#
+# Uso:  cp .env.example .env  &&  edite  &&  docker compose up -d
+#
+# Os datafiles ficam em ${FORD_2TB} (precisa ser APFS — exFAT NAO funciona p/ Oracle).
+
+services:
+  ora19c:
+    image: ${IMG_19C}
+    platform: linux/amd64          # 19c nao tem imagem ARM -> emulacao
+    container_name: cs_ora19c
+    shm_size: "2gb"
+    environment:
+      - ORACLE_PWD=${ORACLE_PWD}
+      - ORACLE_SID=ORCLCDB
+      - ORACLE_PDB=ORCLPDB1
+    ports:
+      - "${PORT_19C}:1521"
+    volumes:
+      - ${FORD_2TB}/oradata-19c:/opt/oracle/oradata
+      - ../:/cscripts:ro          # repo montado p/ rodar os scripts dentro do container
+    healthcheck:
+      test: ["CMD", "sqlplus", "-L", "sys/${ORACLE_PWD}@//localhost:1521/ORCLCDB", "as", "sysdba", "@/dev/null"]
+      interval: 30s
+      timeout: 10s
+      retries: 40
+      start_period: 15m          # 1a inicializacao emulada e LENTA
+
+  ora26ai:
+    image: ${IMG_26AI}
+    platform: linux/arm64          # nativo no Apple Silicon
+    container_name: cs_ora26ai
+    shm_size: "2gb"
+    environment:
+      - ORACLE_PWD=${ORACLE_PWD}
+      # imagem Free: SID=FREE, PDB=FREEPDB1 por padrao
+    ports:
+      - "${PORT_26AI}:1521"
+    volumes:
+      - ${FORD_2TB}/oradata-26ai:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "sqlplus", "-L", "sys/${ORACLE_PWD}@//localhost:1521/FREE", "as", "sysdba", "@/dev/null"]
+      interval: 30s
+      timeout: 10s
+      retries: 40
+      start_period: 8m
