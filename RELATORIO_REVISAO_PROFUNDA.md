@@ -125,7 +125,24 @@ as versões atuais. Mantidos só para referência.
 
 ---
 
-## F. Como validar em banco real
+## F. Verificação dos SET de visualização (SQL*Plus)
+- **Integridade:** comparando cada arquivo das pastas novas com o original, só
+  diferem (além do cabeçalho) os **12 arquivos editados de propósito** (chmod 600,
+  `MATERIALIZE`, nota de versão). Nenhum `SET`/`COL`/formatação foi corrompido.
+- **Arquitetura:** a configuração de exibição é **centralizada** em `set.sql` e
+  `cs_internal/cs_set.sql` (`LIN 2490 PAGES 100 TRIMS ON FEED OFF ...` + formatos
+  NLS). 220 scripts puxam essa cadeia; 77 definem `SET LIN` inline. Os fragmentos
+  `cs_internal/*` **herdam** o SET do script-pai via `@@` (correto por design).
+- **Compat de versão:** os comandos `SET` do SQL*Plus/SQLcl são **idênticos** em
+  19c e 26ai — não há (nem faz sentido) ajuste de visualização por versão; por isso
+  `set.sql`/`cs_set.sql` são byte-a-byte iguais nas duas pastas.
+- **Ajuste aplicado:** 3 scripts de raiz que rodam standalone e produziam relatório
+  sem definir `LINESIZE/PAGESIZE` (`cs_dg.sql`,
+  `cs_opened_cursors_current_per_session.sql`, `cs_spbl_sprf_spch_cnt.sql`) receberam
+  a linha padrão `SET LIN 2490 PAGES 100 TRIMS ON TAB OFF FEED OFF HEA ON;` nas duas
+  pastas, para não herdarem o default `LIN 80` ao serem executados diretamente.
+
+## G. Como validar em banco real
 Use o lab em [`local/`](local/README.md): sobe 19c (emulado) + 26ai (nativo arm64),
 aplica os stubs de ambiente interno, roda `00_env_check.sql` e um smoke read-only,
 e compara os erros `ORA-/SP2-/PLS-` entre as duas versões. Foque a validação de

@@ -5,6 +5,8 @@
 --             para detalhes).
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
+SET LIN 2490 PAGES 100 TRIMS ON TAB OFF FEED OFF HEA ON;
+--
 COL pdb_name FOR A30;
 SELECT c.pdb_name, bl.cnt AS bl, pr.cnt AS pr, pa.cnt AS pa
   FROM (SELECT con_id, name AS pdb_name FROM v$containers) c,
