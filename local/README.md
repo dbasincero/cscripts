@@ -53,13 +53,13 @@ grep -hoE 'ORA-[0-9]+' reports/ora19c__*.log  | sort | uniq -c | sort -rn
 grep -hoE 'ORA-[0-9]+' reports/ora26ai__*.log | sort | uniq -c | sort -rn
 ```
 
-## Sobre os stubs (`stubs/cs_internal_stubs.sql`)
+## Sobre os stubs (`stubs/hf_internal_stubs.sql`)
 Os cscripts foram feitos para a **frota interna Oracle Cloud** e o
-`cs_internal/cs_def.sql` referencia objetos que **não existem** num banco limpo
+`hf_internal/hf_def.sql` referencia objetos que **não existem** num banco limpo
 (`IOD_META_AUX`, `PDB_CONFIG`, `dbc_system`, `dbc_rsrcmgrmetric_history`,
 `dbc_pdb_metadata_v`). O stub cria versões mínimas (retornos fixos) no usuário
 comum `C##IOD` para o `cs_def` completar. Objetos `kiev*`/`zapper*` são opcionais
-(o `cs_def` os protege com checagens de existência) e não são stubados.
+(o `hf_def` os protege com checagens de existência) e não são stubados.
 
 ## Limitações conhecidas
 - O **smoke é best-effort**: muitos scripts são interativos (pedem `sql_id`, faixas

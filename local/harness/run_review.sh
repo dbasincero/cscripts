@@ -25,9 +25,9 @@ TARGETS=(
 
 # Conjunto representativo read-only (cobre v$, ASH, AWR, espaço, métricas).
 SMOKE_SET=(
-  cs_active_sessions.sql cs_ash_analytics.sql cs_top.sql cs_latency.sql
-  cs_average_active_sessions.sql cdb_tablespace_usage_metrics.sql
-  cs_sql_monitor_list.sql cs_system_metrics_now.sql
+  hf_active_sessions.sql hf_ash_analytics.sql hf_top.sql hf_latency.sql
+  hf_average_active_sessions.sql cdb_tablespace_usage_metrics.sql
+  hf_pdbs.sql hf_cpu_demand.sql hf_maximum_active_sessions.sql hf_dg.sql
 )
 
 sqlp() { # sqlp <service> <connect_as: sysdba|app> <<<script
@@ -44,7 +44,7 @@ apply_stubs() {
   echo ">> stubs em $svc ($cdb e $pdb)"
   for srv in "$cdb" "$pdb"; do
     sqlp "$svc" sysdba "$srv" <<SQL || true
-@${STUBS}/cs_internal_stubs.sql
+@${STUBS}/hf_internal_stubs.sql
 EXIT
 SQL
   done

@@ -1,11 +1,11 @@
 --==========================================================================
--- cs_internal_stubs.sql
+-- hf_internal_stubs.sql
 -- Cria objetos-STUB do ambiente interno Oracle Cloud (IOD/dbc_*/kiev) que o
--- cs_internal/cs_def.sql referencia, para que os cscripts rodem num banco
+-- hf_internal/hf_def.sql referencia, para que os cscripts rodem num banco
 -- 19c/26ai limpo (fora da frota interna da Oracle).
 --
 -- Rodar como SYSDBA, UMA VEZ por container (CDB$ROOT e cada PDB).
--- Ex.:  sqlplus sys/<pwd>@//host:porta/SERVICO as sysdba @cs_internal_stubs.sql
+-- Ex.:  sqlplus sys/<pwd>@//host:porta/SERVICO as sysdba @hf_internal_stubs.sql
 --
 -- Sao stubs: retornam valores fixos/neutros so para o cs_def completar. NAO
 -- representam a topologia real. Objetos kiev/zapper sao opcionais (cs_def os
