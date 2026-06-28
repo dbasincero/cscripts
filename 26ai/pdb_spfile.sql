@@ -1,0 +1,34 @@
+--==========================================================================
+-- Script    : pdb_spfile.sql
+-- Versao    : Oracle Database 26ai (26.x)
+-- Uso       : Parâmetros do SPFILE do PDB (a partir do CDB)
+-- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
+--==========================================================================
+-- pdb_spfile.sql - PDB SPFILE Parameters (from CDB)
+SET HEA ON LIN 2490 PAGES 100 TAB OFF FEED OFF ECHO OFF VER OFF TRIMS ON TRIM ON TI OFF TIMI OFF LONG 240000 LONGC 2400 SERVEROUT OFF;
+--
+COL pdb_name FOR A30 TRUNC;
+COL parameter FOR A40;
+COL value$ FOR A30 HEA 'sys.pdb_spfile$';
+COL value FOR A30 HEA 'v$system_parameter';
+--
+BREAK ON pdb_name SKIP PAGE DUPL ON parameter SKIP 1 DUPL;
+--
+SELECT c.name pdb_name,
+       p.name parameter,
+       p.db_uniq_name,
+       p.value$,
+       s.value
+  FROM sys.pdb_spfile$ p,
+       v$containers c,
+       v$system_parameter s
+ WHERE p.pdb_uid > 1
+   AND BITAND(NVL(p.spare2, 0), 1) = 0 -- or: and spare2=0 (as per wilko.edens@gmail.com)
+   AND c.con_uid(+) = p.pdb_uid
+   AND s.con_id(+) = c.con_id
+   AND s.name(+) = p.name
+ ORDER BY
+       c.name,
+       p.name,
+       p.db_uniq_name
+/

@@ -1,0 +1,23 @@
+--==========================================================================
+-- Script    : hf_spool_id_chart_post.sql
+-- Versao    : Oracle Database 26ai (26.x)
+-- Uso       : Script de diagnóstico/utilitário Oracle (ver corpo do script
+--             para detalhes).
+-- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
+--==========================================================================
+PRO <div id="chart_div" class="google-chart"></div>
+PRO <font class="n">&&chart_foot_note_0.</font>
+PRO <font class="n">&&chart_foot_note_1.</font>
+PRO <font class="n">&&chart_foot_note_2.</font>
+PRO <font class="n">&&chart_foot_note_3.</font>
+PRO <font class="n">&&chart_foot_note_4.</font>
+@@&&spool_id_chart_footer_script.
+-- PRO <pre>
+-- get /tmp/hf_last_executed.sql
+-- PRO </pre>
+PRO <pre>
+PRO &&cs_elapsed_time. &&cs_total_time.
+PRO </pre>
+PRO <font class="f">&&report_foot_note.</font>
+PRO </body>
+PRO </html>

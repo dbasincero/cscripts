@@ -1,0 +1,159 @@
+--==========================================================================
+-- Script    : hf_redef_schema.sql
+-- Versao    : Oracle Database 26ai (26.x)
+-- Uso       : Redefinição de Schema (movendo todos os objetos para nova
+--             Tablespace)
+-- Variaveis  : posicionais &1, &2, &3, &4, &5, &6; &&cs_con_name
+-- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
+--==========================================================================
+----------------------------------------------------------------------------------------
+--
+-- File name:   hf_redef_schema.sql
+--
+-- Purpose:     Schema Redefinition (by moving all objects into new Tablespace)
+--
+-- Author:      Carlos Sierra
+--
+-- Version:     2023/04/10
+--
+-- Usage:       Execute connected to PDB
+--
+--              Enter schema name when requested, followed by other parameters
+--
+-- Example:     $ sqlplus / as sysdba
+--              SQL> @hf_redef_schema.sql
+--
+-- Notes:       This operation requires a blackout.
+--              Developed and tested on 12.1.0.2.
+--
+---------------------------------------------------------------------------------------
+--
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_blackout.sql
+@@hf_internal/hf_file_prefix.sql
+--
+DEF cs_script_name = 'cs_redef_schema';
+--
+COL username FOR A30;
+SELECT username
+  FROM dba_users
+ WHERE oracle_maintained = 'N'
+   AND common = 'NO'
+ ORDER BY
+       username
+/
+PRO
+PRO 1. Schema Owner:
+DEF table_owner = '&1.';
+UNDEF 1;
+COL p_owner NEW_V p_owner FOR A30 NOPRI;
+SELECT username AS p_owner 
+  FROM dba_users 
+ WHERE oracle_maintained = 'N'
+   AND common = 'NO'
+   AND username = UPPER(TRIM('&&table_owner.')) 
+   AND ROWNUM = 1
+/
+--
+COL tablespace_name FOR A30;
+SELECT tablespace_name
+  FROM dba_tablespaces
+ WHERE contents = 'PERMANENT'
+   AND tablespace_name NOT IN ('SYSTEM', 'SYSAUX')
+ ORDER BY 
+       tablespace_name
+/
+PRO
+PRO 2. Source Tablespace: 
+DEF tbsname = '&2.';
+UNDEF 2;
+COL p_sourcetbs NEW_V p_sourcetbs FOR A30 NOPRI;
+SELECT tablespace_name AS p_sourcetbs
+  FROM dba_tablespaces
+ WHERE contents = 'PERMANENT'
+   AND tablespace_name NOT IN ('SYSTEM', 'SYSAUX')
+   AND tablespace_name = UPPER(TRIM('&&tbsname.'))
+/
+PRO
+PRO 2. Target Tablespace: 
+DEF tbsname = '&3.';
+UNDEF 2;
+COL p_newtbs NEW_V p_newtbs FOR A30 NOPRI;
+SELECT tablespace_name AS p_newtbs
+  FROM dba_tablespaces
+ WHERE contents = 'PERMANENT'
+   AND tablespace_name NOT IN ('SYSTEM', 'SYSAUX')
+   AND tablespace_name = UPPER(TRIM('&&tbsname.'))
+/
+PRO
+PRO 3. Table OLTP Compression: [{FALSE}|TRUE]
+DEF compression = '&4.';
+UNDEF 3;
+COL p_compression NEW_V p_compression NOPRI;
+SELECT CASE WHEN SUBSTR(UPPER(TRIM('&&compression.')),1,1) IN ('T', 'Y') THEN 'TRUE' ELSE 'FALSE' END AS p_compression FROM DUAL
+/
+PRO
+PRO 4. CLOB Compression and Deduplication: [{NO}|C|CD] NO:None, C:Compression, CD:Compression and Deduplication
+DEF redeflob = '&5.';
+UNDEF 4;
+COL p_lobcomp NEW_V p_lobcomp NOPRI;
+COL p_lobdedup NEW_V p_lobdedup NOPRI; 
+COL p_redeflob NEW_V p_redeflob NOPRI;
+SELECT CASE WHEN NVL(UPPER(TRIM('&&redeflob.')), 'NO') IN ('CD', 'C') THEN 'TRUE' ELSE 'FALSE' END AS p_lobcomp,
+       CASE WHEN NVL(UPPER(TRIM('&&redeflob.')), 'NO') = 'CD' THEN 'TRUE' ELSE 'FALSE' END AS p_lobdedup,
+       CASE WHEN UPPER(TRIM('&&redeflob.')) IN ('CD', 'C', 'NO') THEN UPPER(TRIM('&&redeflob.')) ELSE 'NO' END AS p_redeflob
+FROM DUAL
+/
+PRO
+PRO 5. Degree of Parallelism: [{1}|2|4|8]
+DEF pxdegree = '&6.';
+UNDEF 5;
+COL p_pxdegree NEW_V p_pxdegree NOPRI;
+SELECT CASE WHEN '&&pxdegree.' IN ('1','2','4','8') THEN '&&pxdegree.' ELSE '1' END AS p_pxdegree FROM DUAL
+/
+--
+SELECT '&&cs_file_prefix._&&cs_script_name._&&p_owner.' cs_file_name FROM DUAL;
+--
+@@hf_internal/hf_spool_head.sql
+PRO SQL> @&&cs_script_name..sql "&&p_owner." "&&p_sourcetbs." "&&p_newtbs." "&&p_compression." "&&p_redeflob." "&&p_pxdegree."
+@@hf_internal/hf_spool_id.sql
+--
+PRO TABLE_OWNER  : &&p_owner.
+PRO TABLESPACE   : &&p_newtbs.
+PRO OLTP_COMPRES : &&p_compression.
+PRO LOB_COMPRES  : &&p_redeflob. [{NO}|C|CD] NO:None, C:Compression, CD:Compression and Deduplication
+PRO PX_DEGREE    : &&p_pxdegree. [{1}|2|4|8]
+--
+@@hf_internal/&&cs_set_container_to_cdb_root.
+--
+PRO
+PRO TABLE REDEFINITION
+PRO ~~~~~~~~~~~~~~~~~~
+SET SERVEROUT ON
+BEGIN
+  &&cs_tools_schema..IOD_SPACE.redefschemanewtbs (
+      p_pdb_name      => '&&cs_con_name.'
+    , p_owner         => '&&p_owner.'
+    , p_pxdegree      =>  &&p_pxdegree.
+    , p_sourcetbs     => '&&p_sourcetbs.'
+    , p_newtbs        => '&&p_newtbs.'
+    , p_compression   => &&p_compression.
+    , p_lobcomp       => &&p_lobcomp.
+    , p_lobdedup      => &&p_lobdedup.
+  );
+END;
+/
+SET SERVEROUT OFF;
+--
+@@hf_internal/&&cs_set_container_to_curr_pdb.
+--
+PRO
+PRO SQL> @&&cs_script_name..sql "&&p_owner." "&&p_sourcetbs."  "&&p_newtbs." "&&p_compression." "&&p_redeflob." "&&p_pxdegree."
+--
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
+--
