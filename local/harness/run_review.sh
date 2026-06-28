@@ -72,7 +72,13 @@ SQL" || echo "  (timeout/erro de execução em $scr)"
   printf '  %-45s erros=%s\n' "$scr" "${n:-0}"
 }
 
-mode="${1:-smoke}"
+# Modo padrao = --all (roda toda a lista autonomous_scripts.txt, ~225 read-only).
+# Use --smoke p/ o conjunto representativo, --stubs p/ so (re)criar os stubs.
+mode="${1:---all}"
+# carrega a lista autonoma sem 'mapfile' (compativel com bash 3.2 do macOS)
+LIST_ALL=()
+while IFS= read -r line; do [ -n "$line" ] && LIST_ALL+=("$line"); done < harness/autonomous_scripts.txt
+
 for t in "${TARGETS[@]}"; do
   IFS='|' read -r svc cdb dir pdb <<<"$t"
   echo "================ $svc ($dir) ================"
@@ -83,17 +89,12 @@ for t in "${TARGETS[@]}"; do
 @${HARNESS}/00_env_check.sql
 EXIT
 SQL
-  echo ">> smoke"
-  if [ "$mode" = "--all" ]; then mapfile -t LIST < harness/autonomous_scripts.txt; else LIST=("${SMOKE_SET[@]}"); fi
+  if [ "$mode" = "--smoke" ]; then LIST=("${SMOKE_SET[@]}"); else LIST=("${LIST_ALL[@]}"); fi
+  echo ">> executando ${#LIST[@]} scripts (modo $mode)"
   for scr in "${LIST[@]}"; do
     [ -n "$scr" ] && run_one "$svc" "$pdb" "$dir" "$scr"
   done
 done
 
-echo "================ resumo de erros por versão ================"
-for t in "${TARGETS[@]}"; do
-  IFS='|' read -r svc _ _ _ <<<"$t"
-  tot=$(cat "$OUT/${svc}__"*.log 2>/dev/null | grep -cE 'ORA-|SP2-|PLS-' || true)
-  echo "  $svc: ${tot:-0} linhas de erro (detalhe em $OUT/${svc}__*.log)"
-done
-echo "Compare 19c x 26ai:  grep -hoE 'ORA-[0-9]+' reports/ora19c__*.log | sort -u  vs  ora26ai__*.log"
+# Resumo + diff 19c x 26ai (gera reports/SUMARIO_ORA.md)
+[ "$mode" = "--stubs" ] || ./harness/summarize_errors.sh "$OUT"

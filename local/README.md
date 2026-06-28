@@ -37,21 +37,32 @@ docker compose logs -f ora26ai
 ```
 Espere ambos ficarem `healthy`.
 
-## 3. Rodar a revisão (stubs + env-check + smoke)
+## 3. Rodar a revisão (stubs + env-check + execução)
 ```bash
-./harness/run_review.sh            # conjunto representativo read-only
-./harness/run_review.sh --all      # toda a lista harness/autonomous_scripts.txt
+./harness/run_review.sh            # PADRAO: roda TODA a lista (~225 read-only)
+./harness/run_review.sh --smoke    # conjunto representativo (10 scripts)
 ./harness/run_review.sh --stubs    # só (re)criar os stubs internos
 ```
 Saídas em `local/reports/`:
 - `ora19c__env_check.log` / `ora26ai__env_check.log` — versão, CDB, views, stubs.
 - `oraXX__<script>.log` — saída de cada script; contagem de `ORA-/SP2-/PLS-`.
+- **`SUMARIO_ORA.md`** — sumário + **diff 19c × 26ai** (gerado automaticamente no
+  fim do `run_review.sh`).
 
-Comparar erros entre versões:
+### Sumário/diff de erros (gerado automático, ou avulso)
+O `run_review.sh` já chama o sumarizador no fim. Para rodar avulso sobre logs
+existentes:
 ```bash
-grep -hoE 'ORA-[0-9]+' reports/ora19c__*.log  | sort | uniq -c | sort -rn
-grep -hoE 'ORA-[0-9]+' reports/ora26ai__*.log | sort | uniq -c | sort -rn
+./harness/summarize_errors.sh reports      # gera reports/SUMARIO_ORA.md
 ```
+O `SUMARIO_ORA.md` traz: totais por versão, top códigos, e o **diff** —
+códigos **só no 26ai** (regressões potenciais ao migrar), **só no 19c**, comuns
+(lado a lado), e scripts que erraram em só uma versão.
+
+### Como me mandar os logs depois
+Rode no Mac e cole aqui **o conteúdo de `reports/SUMARIO_ORA.md`** (ou empacote
+os logs: `tar czf reports.tgz reports/`). Com isso eu analiso as diferenças
+19c × 26ai e ataco os itens de compat com dados reais.
 
 ## Sobre os stubs (`stubs/hf_internal_stubs.sql`)
 Os cscripts foram feitos para a **frota interna Oracle Cloud** e o
