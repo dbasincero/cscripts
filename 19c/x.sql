@@ -5,4 +5,4 @@
 --             dado SQL_ID
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_planx.sql
+@@hf_planx.sql

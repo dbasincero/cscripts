@@ -5,4 +5,4 @@
 --             por execução) (AWR) - Granularidade 15m - Estendido
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_latency_range_extended.sql
+@@hf_latency_range_extended.sql

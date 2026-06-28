@@ -5,4 +5,4 @@
 --             Granularidade 15m
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_sqlstat_analytics_aggregate.sql
+@@hf_sqlstat_analytics_aggregate.sql

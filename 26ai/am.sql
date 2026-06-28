@@ -4,4 +4,4 @@
 -- Uso       : Amostras de ASH a partir da MEM
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_ash_mem_sample_report.sql
+@@hf_ash_mem_sample_report.sql

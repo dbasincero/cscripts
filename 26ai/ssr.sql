@@ -5,4 +5,4 @@
 --             hora, diário, global
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_sqlstat_report.sql
+@@hf_sqlstat_report.sql

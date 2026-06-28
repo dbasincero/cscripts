@@ -5,4 +5,4 @@
 --             dbc_active_session)
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_maximum_active_sessions.sql
+@@hf_maximum_active_sessions.sql

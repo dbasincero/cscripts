@@ -29,5 +29,5 @@ SET PAGES 300 LONGC 120;
 ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD"T"HH24:MI:SS';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD"T"HH24:MI:SS.FF3';
 --
-@@cs_internal/cs_latency_internal_cols.sql
-@@cs_internal/cs_latency_internal_query_1.sql
+@@cs_internal/hf_latency_internal_cols.sql
+@@cs_internal/hf_latency_internal_query_1.sql

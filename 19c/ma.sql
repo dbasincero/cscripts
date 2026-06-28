@@ -5,4 +5,4 @@
 --             Temporizados (Maximum Active Sessions)
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_max_ash_analytics.sql
+@@hf_max_ash_analytics.sql

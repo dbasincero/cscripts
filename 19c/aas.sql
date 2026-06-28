@@ -5,4 +5,4 @@
 --             dbc_active_session)
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_average_active_sessions.sql
+@@hf_average_active_sessions.sql

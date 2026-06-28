@@ -1,0 +1,26 @@
+--==========================================================================
+-- Script    : hf_plans_awr_1.sql
+-- Versao    : Oracle Database 19c (19.x)
+-- Uso       : Script de diagnóstico/utilitário Oracle (ver corpo do script
+--             para detalhes).
+-- Variaveis  : &&cs_dbid, &&cs_plan_hash_value, &&cs_sql_id
+-- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
+--==========================================================================
+COL con_id FOR 999 HEA 'Con|ID';
+COL pdb_name FOR A30 HEA 'PDB Name' FOR A30 TRUNC;
+COL timestamp FOR A19 HEA 'Timestamp';
+COL plan_hash_value FOR 9999999999 HEA 'Plan|Hash Value';
+--
+PRO
+PRO AWR PLANS (dba_hist_sql_plan)
+PRO ~~~~~~~~~
+SELECT TO_CHAR(h.timestamp, '&&cs_datetime_full_format.') timestamp, 
+       plan_hash_value
+  FROM dba_hist_sql_plan h
+ WHERE h.sql_id = '&&cs_sql_id.'
+   AND ('&&cs_plan_hash_value.' IS NULL OR h.plan_hash_value = TO_NUMBER('&&cs_plan_hash_value.'))
+   AND h.id = 0
+   AND h.dbid = TO_NUMBER('&&cs_dbid.') 
+ ORDER BY
+       h.timestamp
+/

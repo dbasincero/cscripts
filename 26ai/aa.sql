@@ -5,4 +5,4 @@
 --             Temporizados (Average Active Sessions AAS)
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_ash_analytics.sql
+@@hf_ash_analytics.sql

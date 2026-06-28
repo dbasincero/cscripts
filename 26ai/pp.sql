@@ -5,4 +5,4 @@
 --             Top Keys
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_sqlperf_plus.sql
+@@hf_sqlperf_plus.sql

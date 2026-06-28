@@ -5,4 +5,4 @@
 --             Estendido
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_latency_extended.sql
+@@hf_latency_extended.sql

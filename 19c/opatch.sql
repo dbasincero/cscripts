@@ -13,14 +13,14 @@ PRO
 PRO dba_registry
 PRO ~~~~~~~~~~~~
 1 SELECT * FROM dba_registry;
-@@cs_internal/cs_pr_internal.sql ""
+@@cs_internal/hf_pr_internal.sql ""
 PRO
 PRO dba_registry_sqlpatch
 PRO ~~~~~~~~~~~~~~~~~~~~~
 1 SELECT action_time,action,status,description,logfile,ru_logfile,patch_id,patch_uid,patch_type,source_version,target_version FROM dba_registry_sqlpatch ORDER by action_time;
-@@cs_internal/cs_pr_internal.sql ""
+@@cs_internal/hf_pr_internal.sql ""
 PRO
 PRO dba_registry_history
 PRO ~~~~~~~~~~~~~~~~~~~~
 1 SELECT * FROM dba_registry_history;
-@@cs_internal/cs_pr_internal.sql ""
+@@cs_internal/hf_pr_internal.sql ""
