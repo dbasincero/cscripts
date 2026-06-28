@@ -28,18 +28,18 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_average_active_sessions';
 DEF cs_script_acronym = 'aas.sql | ';
 --
 DEF cs_hours_range_default = '336';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL cs2_granularity_list NEW_V cs2_granularity_list NOPRI;
 COL cs2_default_granularity NEW_V cs2_default_granularity NOPRI;
@@ -120,7 +120,7 @@ COL session_state FOR A13 HEA 'Session|State';
 BREAK ON REPORT;
 COMPUTE SUM OF aas db_seconds ON REPORT;
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 ash_dbc AS (
 SELECT /*+ MATERIALIZE NO_MERGE */
@@ -144,7 +144,7 @@ SELECT ROUND(SUM(db_seconds) / TO_NUMBER('&&cs_from_to_seconds.'), 3) AS aas,
  ORDER BY
        1 DESC
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 5. Session State (opt):
@@ -157,7 +157,7 @@ SELECT '(hit "Return" to skip this patameter since Session State is "ON CPU")' A
 --
 COL wait_class HEA 'Wait Class';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 ash_dbc AS (
 SELECT /*+ MATERIALIZE NO_MERGE */
@@ -187,7 +187,7 @@ SELECT ROUND(SUM(db_seconds) / TO_NUMBER('&&cs_from_to_seconds.'), 3) AS aas,
  ORDER BY
        1 DESC
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 6. Wait Class &&cs2_instruct_to_skip.:
@@ -210,7 +210,7 @@ SELECT CASE '&&cs2_dimension.'
 --
 COL event HEA 'Event';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 ash_dbc AS (
 SELECT /*+ MATERIALIZE NO_MERGE */
@@ -246,7 +246,7 @@ SELECT ROUND(SUM(db_seconds) / TO_NUMBER('&&cs_from_to_seconds.'), 3) AS aas,
        1 DESC
  FETCH FIRST 30 ROWS ONLY
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 7. Event &&cs2_instruct_to_skip.:
@@ -255,7 +255,7 @@ UNDEF 7;
 --
 COL machine HEA 'Machine';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 ash_dbc AS (
 SELECT /*+ MATERIALIZE NO_MERGE */
@@ -283,7 +283,7 @@ SELECT ROUND(SUM(db_seconds) / TO_NUMBER('&&cs_from_to_seconds.'), 3) AS aas,
        1 DESC
  FETCH FIRST 30 ROWS ONLY
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 8. Machine (opt):
@@ -297,7 +297,7 @@ UNDEF 9;
 --
 COL sql_text FOR A60 TRUNC;
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 sql_txt AS (
   SELECT /*+ MATERIALIZE NO_MERGE */ sql_id, MAX(sql_text) AS sql_text
@@ -346,7 +346,7 @@ SELECT ROUND(SUM(db_seconds) / TO_NUMBER('&&cs_from_to_seconds.'), 3) AS aas,
        1 DESC
  FETCH FIRST 30 ROWS ONLY
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 10. SQL_ID (opt):
@@ -409,7 +409,7 @@ COL aas_11 NEW_V aas_11 FOR A9 TRUNC NOPRI;
 COL aas_12 NEW_V aas_12 FOR A9 TRUNC NOPRI;
 COL aas_13 NEW_V aas_13 FOR A9 TRUNC NOPRI;
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 FUNCTION get_sql_text (p_sql_id IN VARCHAR2)
 RETURN VARCHAR2
@@ -585,7 +585,7 @@ SELECT rn, aas, db_seconds, dimension_group,
  ORDER BY
        rn
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
@@ -615,7 +615,7 @@ DEF chart_foot_note_3 = "<br>";
 DEF chart_foot_note_4 = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs2_granularity." "&&cs2_dimension." "&&cs2_session_state." "&&cs2_wait_class." "&&cs2_event." "&&cs2_machine." "&&cs2_sql_text_piece." "&&cs2_sql_id."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&series_01.', id:'01', type:'number'}
 PRO ,{label:'&&series_02.', id:'02', type:'number'}
@@ -633,7 +633,7 @@ PRO ,{label:'&&series_13.', id:'13', type:'number'}
 PRO ]
 SET HEA OFF PAGES 0;
 /****************************************************************************************/
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 WITH
 FUNCTION num_format (p_number IN NUMBER, p_round IN NUMBER DEFAULT 0) 
 RETURN VARCHAR2 IS
@@ -849,13 +849,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

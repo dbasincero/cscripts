@@ -27,11 +27,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_dbms_stats_auto';
 --
@@ -56,9 +56,9 @@ COL cs2_file_suffix NEW_V cs2_file_suffix NOPRI;
 SELECT CASE '&&cs2_format.' WHEN 'TEXT' THEN 'txt' WHEN 'HTML' THEN 'html' WHEN 'XML' THEN 'xml' ELSE 'txt' END AS cs2_file_suffix FROM DUAL
 /
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs2_detail_level." "&&cs2_format."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO DETAIL_LEVEL : "&&cs2_detail_level."
 PRO FORMAT       : "&&cs2_format."
@@ -80,7 +80,7 @@ SPO &&cs_file_name..txt APP
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs2_detail_level." "&&cs2_format."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

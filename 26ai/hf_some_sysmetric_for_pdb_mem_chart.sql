@@ -28,16 +28,16 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF view_name_prefix = 'v$con_sysmetric';
 DEF common_predicate = "con_id = SYS_CONTEXT('USERENV', 'CON_ID')";
 DEF cs_script_name = 'cs_some_sysmetric_for_pdb_mem_chart';
 --
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL metric_name FOR A45 TRUN;
 COL metric_unit FOR A41 TRUN;
@@ -200,7 +200,7 @@ DEF chart_foot_note_4 = "";
 DEF report_foot_note = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&metric_filter." "&&metric_name_1." "&&metric_name_2." "&&metric_name_3." "&&metric_name_4." "&&metric_name_5." "&&metric_name_6." "&&cs_graph_type."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&metric_name_1.', id:'1', type:'number'}
 PRO ,{label:'&&metric_name_2.', id:'2', type:'number'}
@@ -280,13 +280,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

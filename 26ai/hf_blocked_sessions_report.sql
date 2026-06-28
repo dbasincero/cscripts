@@ -27,12 +27,12 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
 SET PAGES 5000;
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_blocked_sessions_report';
 DEF cs_script_acronym = 'bs.sql | ';
@@ -40,11 +40,11 @@ DEF cs_script_acronym = 'bs.sql | ';
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
 DEF cs_hours_range_default = '24';
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL snap_time NEW_V snap_time;
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 SELECT snap_time,
        COUNT(*) AS sessions,
        SUM(CASE WHEN blocking_session_status = 'VALID' OR final_blocking_session_status = 'VALID' THEN 1 ELSE 0 END) AS blockees,
@@ -57,7 +57,7 @@ SELECT snap_time,
  ORDER BY
        snap_time
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 3. Snap Time:
@@ -66,15 +66,15 @@ UNDEF 3;
 SELECT NVL('&&cs_snap_time.', '&&snap_time.') AS snap_time FROM DUAL
 /
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&snap_time."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
 PRO SNAP_TIME    : "&&snap_time."
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL sql_text FOR A70 HEA 'SQL Text' TRUNC;
 COL procedure_name FOR A70 HEA 'PL/SQL Library Entry Point' TRUNC;
@@ -231,10 +231,10 @@ PRO Note: for furher details on a session, execute at CDB: SELECT * FROM &&cs_to
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&snap_time."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

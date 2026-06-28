@@ -26,11 +26,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_table';
 --
@@ -77,9 +77,9 @@ SELECT UPPER(TRIM(NVL('&&table_name.', '&&name.'))) table_name FROM DUAL;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&table_owner..&&table_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&table_owner." "&&table_name."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO TABLE_OWNER  : &&table_owner.
 PRO TABLE_NAME   : &&table_name.
@@ -91,7 +91,7 @@ DEF fetch_first_N_rows = '1';
 PRO
 PRO SUMMARY &&table_owner..&&table_name.
 PRO ~~~~~~~
-@@cs_internal/hf_tables_internal.sql
+@@hf_internal/hf_tables_internal.sql
 --
 COL owner FOR A30 HEA 'Owner' TRUNC;
 COL segment_name FOR A30 TRUNC;
@@ -813,13 +813,13 @@ SELECT SUBSTR(UTL_RAW.CAST_TO_VARCHAR2(SUBSTR(LPAD(TO_CHAR(h.endpoint_value,'fmx
 --
 DEF cs_num_rows_limit_display = '1B';
 DEF cs_num_rows_limit_number = '1e9';
-@@cs_internal/hf_top_primary_keys_table.sql
-@@cs_internal/hf_top_secondary_keys_table.sql
+@@hf_internal/hf_top_primary_keys_table.sql
+@@hf_internal/hf_top_secondary_keys_table.sql
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&table_owner." "&&table_name."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

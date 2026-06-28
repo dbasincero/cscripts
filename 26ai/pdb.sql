@@ -10,7 +10,7 @@
 COL cs_con_name NEW_V cs_con_name NOPRI;
 SELECT SYS_CONTEXT('USERENV', 'CON_NAME') AS cs_con_name FROM DUAL
 /
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 ALTER SESSION SET container = CDB$ROOT;
 --
 COL pdb_name FOR A30 HEA 'PDB Name' PRI;
@@ -239,7 +239,7 @@ UNDEF 1 2 3 4 5 6 7 8 9 10 11 12;
 SELECT COALESCE(TRIM('&&pdb_name.'), '&&cs_con_name.') AS cs_con_name FROM DUAL
 /
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 ALTER SESSION SET CONTAINER = &&cs_con_name.;
 --
 PRO

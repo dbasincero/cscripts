@@ -23,20 +23,20 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlarea_per_pdb';
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql 
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL pdb_name FOR A30;
 COL sharable_mem FOR 999,999,999,990;
@@ -86,10 +86,10 @@ CLEAR BREAK COMPUTE;
 PRO
 PRO SQL> @&&cs_script_name..sql 
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

@@ -29,18 +29,18 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlmon_hist';
 --
 DEF cs_hours_range_default = '168';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL key1 FOR A13 HEA 'SQL_ID';
 COL seconds FOR 999,999,990;
@@ -160,7 +160,7 @@ COL cs_sqlmon_top NEW_V cs_sqlmon_top NOPRI;
 SELECT CASE WHEN TO_NUMBER('&&sqlmon_top.') BETWEEN 1 AND 10000 THEN '&&sqlmon_top.' ELSE '100' END AS cs_sqlmon_top FROM DUAL
 /
 --
-@@cs_internal/hf_sqlmon_hist_internal.sql
+@@hf_internal/hf_sqlmon_hist_internal.sql
 COL report_id_a NEW_V report_id_a NOPRI;
 SELECT TRIM(TO_CHAR('&&report_id.')) AS report_id_a FROM DUAL
 /
@@ -190,18 +190,18 @@ SELECT CASE WHEN UPPER(TRIM('&&report_type.')) IN ('TEXT', 'HTML', 'ACTIVE') THE
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_signature.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_sql_id." "&&cs_sqlmon_top." "&&report_id_from." "&&report_id_to." "&&report_type."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_sample_time.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO REPORT_ID    : FROM &&report_id_from. TO &&report_id_to.
 PRO REPORT_TYPE  : "&&report_type." [{TEXT}|ACTIVE|HTML]
 --
-@@cs_internal/hf_print_sql_text.sql
-@@cs_internal/hf_sqlmon_hist_internal.sql
+@@hf_internal/hf_print_sql_text.sql
+@@hf_internal/hf_sqlmon_hist_internal.sql
 --
 SET PAGES 0;
 SPO &&cs_file_name._driver.sql
@@ -233,7 +233,7 @@ PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." 
 HOS chmod 644 &&cs_file_name._driver.sql
 HOS chmod 644 &&cs_file_name..zip
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

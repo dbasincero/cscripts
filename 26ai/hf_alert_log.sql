@@ -23,8 +23,8 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
 --
 COL trace_dir NEW_V trace_dir FOR A100 NOPRI;
 COL alert_log NEW_V alert_log FOR A30 NOPRI;
@@ -45,6 +45,6 @@ PRO
 PRO scp &&cs_host_name.:/tmp/&&alert_log. &&cs_local_dir.
 PRO scp &&cs_host_name.:/tmp/&&alert_log.* &&cs_local_dir.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

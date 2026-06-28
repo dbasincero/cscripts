@@ -32,11 +32,11 @@
 --
 DEF cbo_hints = 'GATHER_PLAN_STATISTICS MONITOR';
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlmon_capture';
 --
@@ -63,16 +63,16 @@ SELECT CASE WHEN UPPER(TRIM('&&report_type.')) IN ('TEXT', 'HTML', 'ACTIVE') THE
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_signature.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_additional_cbo_hints." "&&report_type."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO CBO_HINTS    : &&cbo_hints. &&cs_additional_cbo_hints.
 PRO REPORT_TYPE  : "&&report_type." [{TEXT}|ACTIVE|HTML]
 --
-@@cs_internal/hf_print_sql_text.sql
+@@hf_internal/hf_print_sql_text.sql
 --
 PRO
 PRO Drop SQL Patch(es) for: "&&cs_sql_id."
@@ -194,7 +194,7 @@ PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_additional_cbo_hints." "&&r
 HOS chmod 644 &&cs_file_name._driver.sql
 HOS chmod 644 &&cs_file_name..zip
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

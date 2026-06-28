@@ -4,4 +4,4 @@
 -- Uso       : Sessões Ativas incluindo Texto do SQL e Plano de Execução
 -- Pre-req    : conexao com privilegio de DBA (acessa views V$/DBA_/CDB_).
 --==========================================================================
-@@cs_internal/hf_active_sessions_internal.sql
+@@hf_internal/hf_active_sessions_internal.sql

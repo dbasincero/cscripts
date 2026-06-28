@@ -26,16 +26,16 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_dba_hist_parameter';
 DEF cs_hours_range_default = '1440';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL parameter_name FOR A43;
 COL dist_values FOR 999,990;
@@ -59,13 +59,13 @@ UNDEF 3;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&parameter_name."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
---@@cs_internal/&&cs_set_container_to_cdb_root.
+--@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 PRO PARAMETER    : "&&parameter_name."
 --
@@ -155,10 +155,10 @@ CLEAR BREAK;
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&parameter_name."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
---@@cs_internal/&&cs_set_container_to_curr_pdb.
+--@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

@@ -43,14 +43,14 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_extents_map';
 --
---@@cs_internal/&&cs_set_container_to_cdb_root.
+--@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 SELECT tablespace_name 
   FROM dba_tablespaces
@@ -257,13 +257,13 @@ PRO <pre>
 L 59 80
 PRO </pre>
 --
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 ROLLBACK;
 PRO
 PRO &&report_foot_note.
 --
---@@cs_internal/&&cs_set_container_to_curr_pdb.
+--@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

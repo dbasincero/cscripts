@@ -76,5 +76,5 @@ SELECT /*+ OPT_PARAM('_px_cdb_view_enabled' 'FALSE') */
 -- PRO
 -- PRO v$tempseg_usage
 -- PRO ~~~~~~~~~~~~~~~
--- @@cs_internal/hf_pr_internal.sql "SELECT * FROM v$tempseg_usage;"
+-- @@hf_internal/hf_pr_internal.sql "SELECT * FROM v$tempseg_usage;"
 --

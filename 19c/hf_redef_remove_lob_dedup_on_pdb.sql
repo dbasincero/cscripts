@@ -27,12 +27,12 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_blackout.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_blackout.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_redef_remove_lob_dedup_on_pdb';
 --
@@ -46,14 +46,14 @@ SELECT CASE WHEN '&&pxdegree.' IN ('1','2','4','8') THEN '&&pxdegree.' ELSE '1' 
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&p_pxdegree."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO PX_DEGREE    : &&p_pxdegree. [{1}|2|4|8]
 --
 COMMIT;
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 PRO
 PRO DEDUP REMOVAL
@@ -70,12 +70,12 @@ END;
 SET SERVEROUT OFF;
 --
 COMMIT;
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&p_pxdegree."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

@@ -82,7 +82,7 @@ ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD"T"HH24:MI:SS';
 COL report_date_time NEW_V report_date_time NOPRI;
 SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD"T"HH24.MI.SS"Z"') AS report_date_time FROM DUAL;
 --
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 ALTER SESSION SET container = CDB$ROOT;
 --
 SPO /tmp/&&script_name._&&report_date_time..txt
@@ -131,7 +131,7 @@ PRO
 PRO SQL> @&&script_name..sql 
 SPO OFF;
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 ALTER SESSION SET CONTAINER = &&cs_con_name.;
 --
 PRO

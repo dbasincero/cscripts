@@ -23,8 +23,8 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
 --
 COL listener_log_dir NEW_V listener_log_dir FOR A100 NOPRI;
 SELECT d.value||'/diag/tnslsnr/'||SUBSTR(i.host_name, 1, INSTR(i.host_name, '.') - 1)||'/listener/trace' AS listener_log_dir FROM v$diag_info d, v$instance i WHERE d.name = 'ADR Base';
@@ -54,6 +54,6 @@ PRO scp &&cs_host_name.:/tmp/listener.log &&cs_local_dir.
 PRO scp &&cs_host_name.:/tmp/listener.log_logons_per_*.txt &&cs_local_dir.
 PRO scp &&cs_host_name.:/tmp/listener.log* &&cs_local_dir.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

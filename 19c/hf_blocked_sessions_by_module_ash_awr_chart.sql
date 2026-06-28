@@ -27,16 +27,16 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_blocked_sessions_by_module_ash_awr_chart';
 DEF cs_hours_range_default = '24';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 PRO 3. Root Blocker State: [{ANY}|ACTIVE|INACTIVE|ACTIVE ON CPU|ACTIVE WAITING|UNKNOWN]
 DEF root_blocker_state = '&3.';
@@ -45,7 +45,7 @@ COL root_blocker_state NEW_V root_blocker_state NOPRI;
 SELECT CASE WHEN UPPER(TRIM('&&root_blocker_state.')) IN ('ANY', 'ACTIVE', 'INACTIVE', 'ACTIVE ON CPU', 'ACTIVE WAITING', 'UNKNOWN') THEN UPPER(TRIM('&&root_blocker_state.')) ELSE 'ANY' END AS root_blocker_state FROM DUAL
 /
 --
---@@cs_internal/&&cs_set_container_to_cdb_root.
+--@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL module_01 NEW_V module_01 NOPRI;
 COL module_02 NEW_V module_02 NOPRI;
@@ -61,7 +61,7 @@ COL module_11 NEW_V module_11 NOPRI;
 COL module_12 NEW_V module_12 NOPRI;
 --
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 , 
 666666 by_sessions_sum AS (
@@ -117,7 +117,7 @@ DEF chart_foot_note_3 = "<br>";
 DEF chart_foot_note_4 = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&root_blocker_state."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&module_01.', id:'01', type:'number'}
 PRO ,{label:'&&module_02.', id:'02', type:'number'}
@@ -136,7 +136,7 @@ PRO ]
 SET HEA OFF PAGES 0;
 --
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 , 
 666666 by_sessions_sum AS (
@@ -202,13 +202,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
---@@cs_internal/&&cs_set_container_to_curr_pdb.
+--@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

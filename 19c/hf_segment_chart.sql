@@ -30,23 +30,23 @@
 -- 1 GiG = 1.073741824 GB
 DEF GiB_to_GB = '1.073741824';
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_segment_chart';
 DEF cs_hours_range_default = '4320';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL cs_hours_range_default NEW_V cs_hours_range_default NOPRI;
 SELECT TRIM(TO_CHAR(LEAST(TRUNC((SYSDATE - MIN(snap_time)) * 24), TO_NUMBER('&&cs_hours_range_default.')))) AS cs_hours_range_default FROM &&cs_tools_schema..dbc_segments
 /
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL max_snap_time NEW_V max_snap_time NOPRI;
 SELECT TO_CHAR(MAX(snap_time), '&&cs_datetime_full_format.') AS max_snap_time FROM &&cs_tools_schema..dbc_segments WHERE pdb_name = '&&cs_con_name.';
@@ -200,7 +200,7 @@ DEF chart_foot_note_3 = "";
 DEF chart_foot_note_4 = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&tablespace_name." "&&owner." "&&segment_name." "&&partition_name." "&&cs_trendlines_type."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'Size GB', id:'1', type:'number'}
 PRO ]
@@ -260,13 +260,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 

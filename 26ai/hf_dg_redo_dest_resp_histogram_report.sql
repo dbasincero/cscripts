@@ -26,23 +26,23 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
---@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+--@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_dg_redo_dest_resp_histogram_report';
 DEF cs_hours_range_default = '8760';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL cs_hours_range_default NEW_V cs_hours_range_default NOPRI;
 SELECT TRIM(TO_CHAR(LEAST(TRUNC((SYSDATE - MIN(time)) * 24), TO_NUMBER('&&cs_hours_range_default.')))) AS cs_hours_range_default FROM C##IOD.dbc_redo_dest_histogram
 /
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL source_host_name FOR A64 TRUNC;
 SELECT DISTINCT host_name AS source_host_name
@@ -69,11 +69,11 @@ UNDEF 4;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&s_host_name." "&&d_host_name."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
 PRO SOURCE       : "&&s_host_name."
 PRO DESTINATION  : "&&d_host_name."
@@ -98,10 +98,10 @@ CL BREAK COMPUTE;
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&s_host_name." "&&d_host_name."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

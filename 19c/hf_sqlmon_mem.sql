@@ -29,11 +29,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlmon_mem';
 --
@@ -110,7 +110,7 @@ COL cs_sqlmon_top NEW_V cs_sqlmon_top NOPRI;
 SELECT CASE WHEN TO_NUMBER('&&sqlmon_top.') BETWEEN 1 AND 10000 THEN '&&sqlmon_top.' ELSE '100' END AS cs_sqlmon_top FROM DUAL
 /
 --
-@@cs_internal/hf_sqlmon_mem_internal.sql
+@@hf_internal/hf_sqlmon_mem_internal.sql
 COL sql_exec_id_a NEW_V sql_exec_id_a NOPRI;
 SELECT TRIM(TO_CHAR('&&sql_exec_id.')) AS sql_exec_id_a FROM DUAL
 /
@@ -140,17 +140,17 @@ SELECT CASE WHEN UPPER(TRIM('&&report_type.')) IN ('TEXT', 'HTML', 'ACTIVE') THE
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_signature.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_sqlmon_top." "&&sql_exec_id_from." "&&sql_exec_id_to." "&&report_type."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO SQL_EXEC_ID  : FROM &&sql_exec_id_from. TO &&sql_exec_id_to.
 PRO REPORT_TYPE  : "&&report_type." [{TEXT}|ACTIVE|HTML]
 --
-@@cs_internal/hf_print_sql_text.sql
-@@cs_internal/hf_sqlmon_mem_internal.sql
+@@hf_internal/hf_print_sql_text.sql
+@@hf_internal/hf_sqlmon_mem_internal.sql
 --
 SET PAGES 0;
 SPO &&cs_file_name._driver.sql
@@ -184,7 +184,7 @@ PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_sqlmon_top." "&&sql_exec_id
 HOS chmod 644 &&cs_file_name._driver.sql
 HOS chmod 644 &&cs_file_name..zip
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

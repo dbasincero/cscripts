@@ -25,23 +25,23 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_top_pdb_chart';
 DEF cs_hours_range_default = '4320';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL cs_hours_range_default NEW_V cs_hours_range_default NOPRI;
 SELECT TRIM(TO_CHAR(LEAST(TRUNC((SYSDATE - MIN(timestamp)) * 24), TO_NUMBER('&&cs_hours_range_default.')))) AS cs_hours_range_default FROM &&cs_tools_schema..dbc_pdbs
 /
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 PRO 3. Metric: [{CPU Cores}|Disk Space|Sessions]
 DEF cs_metric = '&3.';
@@ -141,7 +141,7 @@ SELECT MAX(CASE rn WHEN  1 THEN pdb_name END) AS top_01,
   FROM pdb
 /
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&top_01.', id:'01', type:'number'}
 PRO ,{label:'&&top_02.', id:'02', type:'number'}
@@ -241,12 +241,12 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql

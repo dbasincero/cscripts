@@ -76,7 +76,7 @@ UNDEF 3;
 COL end_snap_id NEW_V end_snap_id NOPRI;
 SELECT NVL('&&end_snap_id.', '&&snap_id.') AS end_snap_id FROM DUAL;
 --
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 ALTER SESSION SET container = CDB$ROOT;
 --
 -- anonymous pl/sql below is identical for hf_load_sysmetric_for_cdb_hist.sql and hf_load_sysmetric_for_pdb_hist.sql
@@ -212,7 +212,7 @@ END;
 /
 SPO OFF;
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 ALTER SESSION SET CONTAINER = &&cs_con_name.;
 --
 PRO

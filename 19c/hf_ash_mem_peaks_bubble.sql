@@ -24,16 +24,16 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_ash_mem_peaks_bubble';
 DEF cs_hours_range_default = '3';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 PRO To chart on Active Sessions over 1x the number of CPU Cores, then pass "1" (default) as Threshold value below
 PRO
@@ -61,12 +61,12 @@ SELECT CASE '&&dimension.'
 FROM DUAL
 /
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 DEF include_hist = 'N';
 DEF include_mem = 'Y';
 SET SERVEROUT OFF;
-@@cs_internal/hf_active_sessions_peaks_internal_v5.sql
+@@hf_internal/hf_active_sessions_peaks_internal_v5.sql
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&dimension.' cs_file_name FROM DUAL;
 --
@@ -89,7 +89,7 @@ DEF report_foot_note = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&times_cpu_cores." "&&dimension."';
 --
 DEF spool_chart_1st_column = 'ID';
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 PRO , 'Time', 'Total Maximum Active Sessions', 'Top#1 &&dimension.', 'Approximate duration in seconds'
 PRO ]
 --
@@ -139,13 +139,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

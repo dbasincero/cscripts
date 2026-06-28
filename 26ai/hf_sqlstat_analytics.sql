@@ -27,19 +27,19 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
--- @@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+-- @@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlstat_analytics';
 DEF cs_script_acronym = 'ssa.sql | ';
 --
 DEF cs_hours_range_default = '168';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 PRO
 PRO SQL Statistic                       Note
@@ -393,7 +393,7 @@ COL module_13 NEW_V module_13 TRUNC NOPRI;
 PRO
 PRO please wait... computing top sql...
 --
---@@cs_internal/&&cs_set_container_to_cdb_root.
+--@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 /****************************************************************************************/
 WITH 
@@ -1053,7 +1053,7 @@ DEF chart_foot_note_3 = "<br>";
 DEF chart_foot_note_4 = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_sql_statistic." "&&cs_sql_type." "&&cs2_sql_text_piece." "&&cs_sql_id." "&&cs_include_sys." "&&cs_graph_type."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&sql_id_01. &&plan_hash_value_01. &&sql_type_01. &&pdb_name_01.', id:'01', type:'number'}
 PRO ,{label:'&&sql_id_02. &&plan_hash_value_02. &&sql_type_02. &&pdb_name_02.', id:'02', type:'number'}
@@ -1706,13 +1706,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
---@@cs_internal/&&cs_set_container_to_curr_pdb.
+--@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

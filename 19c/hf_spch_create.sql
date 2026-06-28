@@ -50,11 +50,11 @@
 
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_spch_create';
 --
@@ -64,11 +64,11 @@ UNDEF 1;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
-@@cs_internal/&&cs_zapper_managed.
+@@hf_internal/hf_signature.sql
+@@hf_internal/&&cs_zapper_managed.
 --
-@@cs_internal/hf_plans_performance.sql 
-@@cs_internal/hf_spch_internal_list.sql
+@@hf_internal/hf_plans_performance.sql 
+@@hf_internal/hf_spch_internal_list.sql
 --
 COL default_hints_text NEW_V default_hints_text NOPRI;
 SELECT q'[&&hints_text.]'||CASE WHEN '&&cs_kiev_table_name.' IS NOT NULL THEN ' LEADING(@SEL$1 &&cs_kiev_table_name.)' END||q'[ OPT_PARAM('_b_tree_bitmap_plans' 'FALSE') OPT_PARAM('_no_or_expansion' 'TRUE')]' AS default_hints_text FROM DUAL;
@@ -83,27 +83,27 @@ UNDEF 2;
 COL hints_text NEW_V hints_text NOPRI;
 SELECT NVL(q'[&&hints_text.]', q'[&&default_hints_text.]') AS hints_text FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&hints_text." 
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO CBO HINTS    : "&&hints_text."
 --
-@@cs_internal/hf_print_sql_text.sql
+@@hf_internal/hf_print_sql_text.sql
 -- drop existing patch if any
-@@cs_internal/hf_spch_internal_drop.sql
+@@hf_internal/hf_spch_internal_drop.sql
 --
 PRO
 PRO Create name: "spch_&&cs_sql_id."
-@@cs_internal/hf_spch_internal_create.sql
+@@hf_internal/hf_spch_internal_create.sql
 --
-@@cs_internal/hf_spch_internal_list.sql
+@@hf_internal/hf_spch_internal_list.sql
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&hints_text." 
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --
 

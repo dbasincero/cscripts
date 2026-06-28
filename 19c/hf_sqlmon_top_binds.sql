@@ -26,25 +26,25 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlmon_top_binds';
 DEF cs_hours_range_default = '168';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL cs_hours_range_default NEW_V cs_hours_range_default NOPRI;
 SELECT TRIM(TO_CHAR(LEAST(TRUNC((SYSDATE - MIN(snap_time)) * 24), TO_NUMBER('&&cs_hours_range_default.')))) AS cs_hours_range_default FROM &&cs_tools_schema..iod_sql_monitor
 /
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 PRO 3. SQL_ID: 
 DEF cs_sql_id = '&3.';
@@ -52,13 +52,13 @@ UNDEF 3;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
+@@hf_internal/hf_signature.sql
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_sql_id."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
 PRO SQL_ID       : &&cs_sql_id.
 PRO SIGNATURE    : &&cs_signature.
@@ -67,8 +67,8 @@ PRO APPLICATION  : &&cs_application_category.
 PRO TABLE_OWNER  : &&table_owner.
 PRO TABLE_NAME   : &&table_name.
 --
-@@cs_internal/hf_print_sql_text.sql
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/hf_print_sql_text.sql
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL key NOPRI;
 COL sql_exec_start FOR A19;
@@ -206,11 +206,11 @@ SELECT sum_elapsed_secs,
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_sql_id."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --
 

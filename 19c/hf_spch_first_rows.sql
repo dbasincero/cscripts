@@ -29,11 +29,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_spch_first_rows';
 --
@@ -41,8 +41,8 @@ DEF cs_sql_id_col = 'NOPRI';
 DEF cs_uncommon_col = 'NOPRI';
 DEF cs_delta_col = 'NOPRI';
 -- DEF cs_sqlstat_days = '0.25';
--- @@cs_internal/hf_sample_time_boundaries.sql
--- @@cs_internal/hf_snap_id_from_and_to.sql
+-- @@hf_internal/hf_sample_time_boundaries.sql
+-- @@hf_internal/hf_snap_id_from_and_to.sql
 --
 PRO 1. SQL_ID: 
 DEF cs_sql_id = "&1.";
@@ -50,41 +50,41 @@ UNDEF 1;
 DEF cs_filter_1 = 'sql_id = ''&&cs_sql_id.''';
 DEF cs2_sql_text_piece = '';
 --
-@@cs_internal/hf_last_snap.sql
+@@hf_internal/hf_last_snap.sql
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
+@@hf_internal/hf_signature.sql
 --
 COL hints_text NEW_V hints_text NOPRI;
 SELECT q'[&&hints_text.]'||CASE WHEN '&&cs_kiev_table_name.' IS NOT NULL THEN ' LEADING(@SEL$1 &&cs_kiev_table_name.)' END||q'[ OPT_PARAM('_b_tree_bitmap_plans' 'FALSE') OPT_PARAM('_no_or_expansion' 'TRUE')]' AS hints_text FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO CBO HINTS    : "&&hints_text."
 --
-@@cs_internal/hf_print_sql_text.sql
+@@hf_internal/hf_print_sql_text.sql
 -- drop existing patch if any
-@@cs_internal/hf_spch_internal_drop.sql
+@@hf_internal/hf_spch_internal_drop.sql
 --
 PRO
 PRO Create name: "spch_&&cs_sql_id."
-@@cs_internal/hf_spch_internal_create.sql
+@@hf_internal/hf_spch_internal_create.sql
 --
-@@cs_internal/hf_spch_internal_list.sql
+@@hf_internal/hf_spch_internal_list.sql
 --
 -- drop existing profile if any
-@@cs_internal/hf_sprf_internal_stgtab.sql
-@@cs_internal/hf_sprf_internal_pack.sql
-@@cs_internal/hf_sprf_internal_drop.sql
+@@hf_internal/hf_sprf_internal_stgtab.sql
+@@hf_internal/hf_sprf_internal_pack.sql
+@@hf_internal/hf_sprf_internal_drop.sql
 --
 -- drop existing baseline if any
 DEF cs_plan_name = '';
-@@cs_internal/hf_spbl_internal_stgtab.sql
-@@cs_internal/hf_spbl_internal_pack.sql
+@@hf_internal/hf_spbl_internal_stgtab.sql
+@@hf_internal/hf_spbl_internal_pack.sql
 DECLARE
   l_plans INTEGER := 0;
 BEGIN
@@ -95,13 +95,13 @@ END;
 /
 --
 DEF cs_scope_1 = '';
-@@cs_internal/hf_gv_sql_global.sql 
-@@cs_internal/hf_gv_sql_stability.sql
+@@hf_internal/hf_gv_sql_global.sql 
+@@hf_internal/hf_gv_sql_stability.sql
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

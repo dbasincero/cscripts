@@ -58,7 +58,7 @@ PRO HOS find &&trace_dir./ -mmin -60 | grep trc | xargs grep -i "(sql_id=&&sql_i
 PRO
 -- purge cursor &&purge_count. times. this is to potentially collect up to &&purge_count. traces, hoping to produce more than one distinct plan.
 SET SERVEROUT ON;
-@@cs_internal/cs_internal_purge_cursor "&&sql_id."
+@@hf_internal/cs_internal_purge_cursor "&&sql_id."
 DECLARE
     l_name     VARCHAR2(64);
 BEGIN

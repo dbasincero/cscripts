@@ -28,18 +28,18 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
--- @@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+-- @@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sqlstat_report';
 DEF cs_script_acronym = 'ssr.sql | ';
 --
 DEF cs_hours_range_default = '24';
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 DEF cs_scope_1 = 'between &&cs_sample_time_from. and &&cs_sample_time_to.';
 --
@@ -109,11 +109,11 @@ FROM DUAL
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.'||NVL2('&&cs_sql_id.', '_&&cs_sql_id.', NULL) AS cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_report_type." "&&cs_include_uncommon_columns." "&&cs_include_delta_columns." "&&cs_include_sys." "&&cs2_sql_text_piece." "&&cs_sql_id."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
 PRO REPORT_TYPE  : "&&cs_report_type."
 PRO UNCOMMON_COLS: "&&cs_include_uncommon_columns."
@@ -122,17 +122,17 @@ PRO SYS_SQL      : "&&cs_include_sys."
 PRO SQL_TEXT     : "&&cs2_sql_text_piece."
 PRO SQL_ID       : "&&cs_sql_id."
 --
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 --
-@@cs_internal/cs_dba_hist_sqlstat_&&cs_report_type..sql
+@@hf_internal/cs_dba_hist_sqlstat_&&cs_report_type..sql
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_report_type." "&&cs_include_uncommon_columns." "&&cs_include_delta_columns." "&&cs_include_sys." "&&cs2_sql_text_piece." "&&cs_sql_id."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

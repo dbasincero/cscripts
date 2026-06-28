@@ -31,11 +31,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sprf_export';
 --
@@ -79,9 +79,9 @@ UNDEF 3;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' AS cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_parsing_schema_name." "&&cs2_sql_text_piece." "&&cs_sql_id."  
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO SCHEMA_NAME  : "&&cs_parsing_schema_name."
 PRO SQL_TEXT     : "&&cs2_sql_text_piece."
@@ -521,9 +521,9 @@ PRINT v_exported;
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_parsing_schema_name." "&&cs2_sql_text_piece." "&&cs_sql_id."  
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --
 PRO
 HOS ls -l &&cs_file_prefix._&&cs_script_name.*.*

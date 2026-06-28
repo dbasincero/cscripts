@@ -23,8 +23,8 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
 --
 COL trace_dir NEW_V trace_dir FOR A100 NOPRI;
 COL ckpt_trc NEW_V ckpt_trc FOR A30 NOPRI;
@@ -45,6 +45,6 @@ PRO If you want to copy CKPT trace file, execute scp command below, from a TERM 
 PRO
 PRO scp &&cs_host_name.:/tmp/&&ckpt_trc. &&cs_local_dir.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

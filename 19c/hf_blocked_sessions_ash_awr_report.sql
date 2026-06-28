@@ -27,33 +27,33 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_blocked_sessions_ash_awr_report';
 DEF cs_hours_range_default = '24';
 DEF cs_top_n = '20';
 DEF cs_min_perc = '0.1';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." 
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
 DEF times_cpu_cores = '1';
 DEF include_hist = 'Y';
 DEF include_mem = 'Y';
-@@cs_internal/hf_ash_block_chains.sql
+@@hf_internal/hf_ash_block_chains.sql
 --
 COL time FOR A19 HEA 'SAMPLE TIME';
 COL blocked FOR 999,990 HEA 'BLOCKED|SESSIONS|COUNT';
@@ -73,7 +73,7 @@ PRO
 PRO Root Blocker contribution percent by SQL_ID (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -111,7 +111,7 @@ PRO
 PRO Root Blocker contribution percent by Timed Event (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -147,7 +147,7 @@ PRO
 PRO Root Blocker contribution percent by Module (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -183,7 +183,7 @@ PRO
 PRO Root Blocker contribution percent by Machine (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -220,7 +220,7 @@ PRO
 PRO Root Blocker contribution percent by SID (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -257,7 +257,7 @@ PRO
 PRO Root Blocker contribution percent by Timed Event and SQL_ID (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -297,7 +297,7 @@ PRO
 PRO Root Blocker contribution percent by Module, Timed Event and SQL_ID (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -339,7 +339,7 @@ PRO
 PRO Root Blocker contribution percent by Machine, Module, Timed Event and SQL_ID (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -384,7 +384,7 @@ PRO
 PRO Root Blocker contribution percent by SID, Machine, Module, Timed Event and SQL_ID (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 ,
 666666 detail AS (
@@ -431,7 +431,7 @@ PRO
 PRO Sample of Blocked Sessions (between &&cs_sample_time_from. and &&cs_sample_time_to. UTC)
 PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 SELECT b.time,
 666666        b.wait_class_event,
@@ -457,10 +457,10 @@ PRO "INACTIVE" means: Database is waiting for Application Host to release LOCK, 
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." 
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

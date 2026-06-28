@@ -31,11 +31,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_spbl_impdp';
 --
@@ -59,12 +59,12 @@ UNDEF 2;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
+@@hf_internal/hf_signature.sql
 --
-@@cs_internal/hf_spbl_internal_stgtab.sql
-@@cs_internal/hf_spbl_internal_stgtab_delete.sql
+@@hf_internal/hf_spbl_internal_stgtab.sql
+@@hf_internal/hf_spbl_internal_stgtab_delete.sql
 --
-@@cs_internal/hf_temp_dir_create.sql
+@@hf_internal/hf_temp_dir_create.sql
 --
 HOS cp /tmp/&&cs_dp_file_name..dmp &&cs_temp_dir./
 --
@@ -76,9 +76,9 @@ UNDEF sys_password
 HOS cp &&cs_temp_dir./&&cs_dp_file_name..impdp.log /tmp/
 HOS chmod 644 /tmp/&&cs_dp_file_name..impdp.log
 --
-@@cs_internal/hf_temp_dir_drop.sql
+@@hf_internal/hf_temp_dir_drop.sql
 --
-@@cs_internal/hf_spbl_internal_list.sql
+@@hf_internal/hf_spbl_internal_list.sql
 --
 PRO
 PRO 3. Plan Name to unpack from staging table: (opt)
@@ -86,15 +86,15 @@ DEF cs_plan_name = '&3.';
 UNDEF 3;
 --
 PRO
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_dp_file_name." "&&cs_sql_id." "&&cs_plan_name."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO DATAPUMP_FILE: &&dp_file_name.
 PRO PLAN_NAME    : "&&cs_plan_name."
 --
-@@cs_internal/hf_print_sql_text.sql
+@@hf_internal/hf_print_sql_text.sql
 PRO
 PRO Unpack plan: "&&cs_plan_name."
 DECLARE
@@ -111,12 +111,12 @@ BEGIN
 END;
 /
 --
-@@cs_internal/hf_spbl_internal_list.sql
+@@hf_internal/hf_spbl_internal_list.sql
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_dp_file_name." "&&cs_sql_id." "&&cs_plan_name."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

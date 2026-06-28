@@ -28,15 +28,15 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_sess_mon';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL snap_time NEW_V snap_time;
 COL sessions FOR 999,990;
@@ -173,9 +173,9 @@ SELECT COALESCE('&&snap_time_p.', '&&snap_time.') AS snap_time FROM DUAL;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&snap_time."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO SNAP_TIME    : &&snap_time.
 --
@@ -359,39 +359,39 @@ SELECT w.id,
        w.w_rownum
 /
 PRO
-@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_wait_chains WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'')";
+@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_wait_chains WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'')";
 PRO
 PRO Sessions (v$session)
 PRO ~~~~~~~~
-@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_session WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY final_blocking_session NULLS FIRST, sid";
+@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_session WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY final_blocking_session NULLS FIRST, sid";
 PRO
 PRO Locks (v$lock)
 PRO ~~~~~
-@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_lock WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY sid, type, id1";
+@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_lock WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY sid, type, id1";
 PRO
 PRO Transactions (v$transaction)
 PRO ~~~~~~~~~~~~
-@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_transaction WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY addr";
+@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_transaction WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY addr";
 --PRO
 --PRO Library Cache Pins (x$kglpn)
 --PRO ~~~~~~~~~~~~~~~~~~
---@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_lc_pin WHERE snap_time = TO_DATE(''&&snap_time.'')";
+--@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_lc_pin WHERE snap_time = TO_DATE(''&&snap_time.'')";
 --PRO
 --PRO Library Cache Locks (x$kgllk)
 --PRO ~~~~~~~~~~~~~~~~~~~
---@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_lc_lock WHERE snap_time = TO_DATE(''&&snap_time.'')";
+--@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_lc_lock WHERE snap_time = TO_DATE(''&&snap_time.'')";
 PRO
 PRO Objects (dba_objects)
 PRO ~~~~~~~
-@@cs_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_objects WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY object_id";
+@@hf_internal/hf_pr_internal.sql "SELECT * FROM &&cs_tools_schema..sess_mon_objects WHERE ''&&cs_con_name.'' IN (''CDB$ROOT'', pdb_name) AND snap_time = TO_DATE(''&&snap_time.'') ORDER BY object_id";
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&snap_time."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

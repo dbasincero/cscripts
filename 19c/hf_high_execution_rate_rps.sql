@@ -26,11 +26,11 @@
 --             
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_high_execution_rate_rps';
 --
@@ -46,19 +46,19 @@ COL cs_seconds NEW_V cs_seconds NOPRI;
 SELECT CASE WHEN TO_NUMBER('&&cs_seconds.') BETWEEN 1 AND 60 THEN '&&cs_seconds.' ELSE '1' END AS cs_seconds FROM DUAL
 /
 --
-@@cs_internal/hf_last_snap.sql
+@@hf_internal/hf_last_snap.sql
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_signature.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_seconds."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO SECONDS      : &&cs_seconds.
 --
-@@cs_internal/hf_print_sql_text.sql
+@@hf_internal/hf_print_sql_text.sql
 PRO
 PRO Samples (v$sqlstats)
 PRO ~~~~~~~ 
@@ -159,7 +159,7 @@ SET SERVEROUT OFF;
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_seconds."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

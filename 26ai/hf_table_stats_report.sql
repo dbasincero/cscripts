@@ -27,23 +27,23 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_table_stats_report';
 DEF cs_hours_range_default = '8760';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 COL cs_hours_range_default NEW_V cs_hours_range_default NOPRI;
 SELECT TRIM(TO_CHAR(LEAST(TRUNC((SYSDATE - MIN(last_analyzed)) * 24), TO_NUMBER('&&cs_hours_range_default.')))) AS cs_hours_range_default FROM &&cs_tools_schema..dbc_tables
 /
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL owner NEW_V owner FOR A30 HEA 'TABLE_OWNER';
 COL oracle_maintained FOR A4 HEA 'ORCL';
@@ -106,11 +106,11 @@ SELECT UPPER(TRIM('&&table_name.')) table_name FROM DUAL;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&table_owner..&&table_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&table_owner." "&&table_name."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
-@@cs_internal/hf_spool_id_sample_time.sql
+@@hf_internal/hf_spool_id_sample_time.sql
 --
 PRO TABLE_OWNER  : &&table_owner.
 PRO TABLE_NAME   : &&table_name.
@@ -157,7 +157,7 @@ COL inserts_per_sec FOR 999,990.000 HEA 'INSERTS|PER SEC';
 COL updates_per_sec FOR 999,990.000 HEA 'UPDATES|PER SEC';
 COL deletes_per_sec FOR 999,990.000 HEA 'DELETES|PER SEC';
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 SELECT TO_CHAR(t.last_analyzed, '&&cs_datetime_full_format.') AS last_analyzed,
        t.num_rows,
@@ -214,10 +214,10 @@ SELECT TO_CHAR(t.last_analyzed, '&&cs_datetime_full_format.') AS analyzetime,
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&table_owner." "&&table_name."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

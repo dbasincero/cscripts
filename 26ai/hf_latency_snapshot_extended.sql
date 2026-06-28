@@ -25,11 +25,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_latency_snapshot_extended';
 DEF cs_top_latency = '40';
@@ -62,29 +62,29 @@ SELECT CASE WHEN TRUNC(TO_NUMBER('&&cs_snapshot_seconds.')) BETWEEN 5 AND 900 TH
 /
 DEF cs_execs_delta_h = '&&cs_snapshot_seconds. secs';
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
-@@cs_internal/hf_latency_internal_snapshot.sql
+@@hf_internal/hf_latency_internal_snapshot.sql
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_snapshot_seconds."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO SECONDS      : "&&cs_snapshot_seconds." [{&&cs_default_snapshot_seconds.}|5-900]
 PRO TIME_FROM    : "&&cs_sample_time_from."  
 PRO TIME_TO      : "&&cs_sample_time_to." 
 --
-@@cs_internal/hf_latency_internal_cols.sql
-@@cs_internal/hf_latency_internal_query_5.sql
-@@cs_internal/hf_latency_internal_foot.sql
+@@hf_internal/hf_latency_internal_cols.sql
+@@hf_internal/hf_latency_internal_query_5.sql
+@@hf_internal/hf_latency_internal_foot.sql
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_snapshot_seconds."
 --
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

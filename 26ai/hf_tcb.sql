@@ -27,11 +27,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_tcb';
 --
@@ -49,22 +49,22 @@ SELECT CASE WHEN TO_NUMBER('&&cs_samplingPercent.') BETWEEN 1 AND 100 THEN '&&cs
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id._TCB' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_signature.sql
+@@hf_internal/hf_signature.sql
 --
 PRO
 ACCEPT sys_password CHAR PROMPT 'Enter SYS Password (hidden): ' HIDE
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_samplingPercent."
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO SAMPLING_PERC: "&&cs_samplingPercent." [{100}|1-100]
 PRO PARSE_SCHEMA : &&cs_parsing_schema_name.
 PRO TEMP_DIR     : "&&cs_temp_dir." 
 --
-@@cs_internal/hf_print_sql_text.sql
-@@cs_internal/hf_temp_dir_create.sql
+@@hf_internal/hf_print_sql_text.sql
+@@hf_internal/hf_temp_dir_create.sql
 --
 ALTER SESSION SET current_schema = &&cs_parsing_schema_name.;
 --
@@ -78,13 +78,13 @@ ALTER SESSION SET current_schema = &&cs_current_schema.;
 HOS cp &&cs_temp_dir./TCB_&&cs_sql_id.* /tmp/
 HOS chmod 644 /tmp/TCB_&&cs_sql_id.*
 --
-@@cs_internal/hf_temp_dir_drop.sql
+@@hf_internal/hf_temp_dir_drop.sql
 --
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_samplingPercent."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --
 PRO
 PRO TCB files

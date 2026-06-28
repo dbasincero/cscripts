@@ -18,7 +18,7 @@ SELECT TRIM(TO_CHAR(d.dbid)) AS cs_dbid, TRIM(TO_CHAR(i.instance_number)) AS cs_
   FROM v$database d, v$instance i
 /
 --
-@@cs_internal/hf_last_snap.sql
+@@hf_internal/hf_last_snap.sql
 --
 COL t_1_snap_id NEW_V t_1_snap_id NOPRI;
 COL t_1_snap_begin NEW_V t_1_snap_begin NOPRI;

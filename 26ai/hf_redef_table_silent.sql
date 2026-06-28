@@ -33,12 +33,12 @@ DEF api_name = 'REDEFLOBC';
 DEF p_redeflob = 'NO';
 DEF p_pxdegree = '1';
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_blackout.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_blackout.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_redef_table_silent';
 --
@@ -86,9 +86,9 @@ UNDEF 3;
 --
 SELECT '&&cs_file_prefix._&&cs_script_name._&&p_owner..&&p_table_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&p_owner." "&&p_table_name." "&&cs_reference."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO TABLE_OWNER  : &&p_owner.
 PRO TABLE_NAME   : &&p_table_name.
@@ -110,14 +110,14 @@ DEF lobs_MB = '';
 PRO
 PRO BEFORE
 PRO ~~~~~~
-@@cs_internal/hf_tables_internal.sql
+@@hf_internal/hf_tables_internal.sql
 DEF total_MB_b = "&&total_MB.";
 DEF table_MB_b = "&&table_MB.";
 DEF indexes_MB_b = "&&indexes_MB.";
 DEF lobs_MB_b = "&&lobs_MB.";
-@@cs_internal/hf_lobs_internal.sql
+@@hf_internal/hf_lobs_internal.sql
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 PRO
 PRO TABLE REDEFINITION
@@ -137,17 +137,17 @@ END;
 /
 SET SERVEROUT OFF;
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO AFTER
 PRO ~~~~~
-@@cs_internal/hf_tables_internal.sql
+@@hf_internal/hf_tables_internal.sql
 DEF total_MB_a = "&&total_MB.";
 DEF table_MB_a = "&&table_MB.";
 DEF indexes_MB_a = "&&indexes_MB.";
 DEF lobs_MB_a = "&&lobs_MB.";
-@@cs_internal/hf_lobs_internal.sql
+@@hf_internal/hf_lobs_internal.sql
 --
 COL type FOR A10 HEA 'OBJECT';
 COL MB_before FOR 99,999,990.0;
@@ -168,7 +168,7 @@ SELECT 'Total:' AS type, TO_NUMBER('&&total_MB_b.') AS MB_before, TO_NUMBER('&&t
 PRO
 PRO SQL> @&&cs_script_name..sql "&&p_owner." "&&p_table_name." "&&cs_reference."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

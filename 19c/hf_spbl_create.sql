@@ -28,11 +28,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_spbl_create';
 --
@@ -40,11 +40,11 @@ PRO 1. SQL_ID:
 DEF cs_sql_id = '&1.';
 UNDEF 1;
 --
-@@cs_internal/hf_signature.sql
-@@cs_internal/&&cs_zapper_managed.
+@@hf_internal/hf_signature.sql
+@@hf_internal/&&cs_zapper_managed.
 --
-@@cs_internal/hf_plans_performance.sql 
---@@cs_internal/hf_spbl_internal_list.sql
+@@hf_internal/hf_plans_performance.sql 
+--@@hf_internal/hf_spbl_internal_list.sql
 --
 PRO
 PRO 2. Plan Hash Value:
@@ -57,15 +57,15 @@ SELECT '&&cs_file_prefix._&&cs_script_name._&&cs_sql_id._&&cs_plan_hash_value.' 
 COL creation_time NEW_V creation_time NOPRI;
 SELECT TO_CHAR(SYSDATE, '&&cs_datetime_full_format.') AS creation_time FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_plan_hash_value." 
-@@cs_internal/hf_spool_id.sql
-@@cs_internal/hf_spool_id_list_sql_id.sql
+@@hf_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id_list_sql_id.sql
 --
 PRO PLAN_HASH_VAL: &&cs_plan_hash_value. 
 --
-@@cs_internal/hf_print_sql_text.sql
-@@cs_internal/&&cs_spbl_create_pre.
+@@hf_internal/hf_print_sql_text.sql
+@@hf_internal/&&cs_spbl_create_pre.
 --
 ---------------------------------------------------------------------------------------
 --
@@ -154,18 +154,18 @@ BEGIN
 END;
 /
 --
-@@cs_internal/&&cs_spbl_create_post.
+@@hf_internal/&&cs_spbl_create_post.
 --
 ---------------------------------------------------------------------------------------
 --
 SET SERVEROUT OFF;
-@@cs_internal/hf_spbl_internal_list.sql
-@@cs_internal/hf_plans_performance.sql 
+@@hf_internal/hf_spbl_internal_list.sql
+@@hf_internal/hf_plans_performance.sql 
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_sql_id." "&&cs_plan_hash_value." 
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

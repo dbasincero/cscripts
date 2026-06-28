@@ -124,7 +124,7 @@ COL open_cursors_count &&cs_format. HEA 'Open Cursors|Count|&&cs_hea.';
 BREAK ON REPORT;
 COMPUTE SUM OF db_cpu redo_size logical_reads block_changes physical_reads physical_writes total_read_io total_write_io appl_read_io appl_write_io network_traffic user_calls parses hard_parses failed_parses executes logons open_cursors transactions commits rollbacks logons_count session_count aas ass aps bs open_cursors_count ON REPORT;
 --
--- @@cs_internal/&&cs_set_container_to_cdb_root.
+-- @@hf_internal/&&cs_set_container_to_cdb_root.
 ALTER SESSION SET container = CDB$ROOT;
 --
 SPO /tmp/&&script_name._&&report_date_time..txt
@@ -194,7 +194,7 @@ PRO
 PRO SQL> @&&script_name..sql "&&num_days." "&&begin_snap_id." "&&end_snap_id." "&&cs_metric_group."
 SPO OFF;
 --
--- @@cs_internal/&&cs_set_container_to_curr_pdb.
+-- @@hf_internal/&&cs_set_container_to_curr_pdb.
 ALTER SESSION SET CONTAINER = &&cs_con_name.;
 --
 PRO

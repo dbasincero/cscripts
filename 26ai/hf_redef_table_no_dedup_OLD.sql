@@ -28,12 +28,12 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_blackout.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_blackout.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_redef_table_no_dedup';
 --
@@ -88,9 +88,9 @@ SELECT '&&cs_file_prefix._&&cs_script_name._&&p_table_owner..&&p_table_name.' cs
 DEF cs_file_name_p = "&&cs_file_name.";
 DEF cs_script_name_p = "&&cs_script_name.";
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&p_table_name." "&&p_table_owner."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO TABLE_OWNER  : &&p_table_owner.
 PRO TABLE_NAME   : &&p_table_name.
@@ -244,13 +244,13 @@ PRO
 PRO SQL> @&&cs_script_name_p..sql "&&p_table_name." "&&p_table_owner." "&&p_dop."
 --
 DEF cs_script_name = "&&cs_script_name_p.";
-@@cs_internal/hf_spool_tail.sql
+@@hf_internal/hf_spool_tail.sql
 PRO
 PRO If you want before and after details on &&p_table_name. table, index(es) and lob(s):
 PRO &&scp_b.
 PRO &&scp_a.
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --
 PRO Manually remove original table, which now has the name of the new table; and also backup table
 PRO DROP TABLE &&p_table_owner..&&table_name_redef. PURGE;;

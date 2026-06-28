@@ -27,18 +27,18 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_blocked_sessions_by_state_ash_awr_chart';
 DEF cs_hours_range_default = '24';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
---@@cs_internal/&&cs_set_container_to_cdb_root.
+--@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
@@ -58,7 +58,7 @@ DEF chart_foot_note_3 = "<br>";
 DEF chart_foot_note_4 = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'ACTIVE ON CPU', id:'1', type:'number'}
 PRO ,{label:'ACTIVE WAITING', id:'2', type:'number'}
@@ -69,7 +69,7 @@ PRO ]
 SET HEA OFF PAGES 0;
 --
 SET TERM OFF;
-GET cs_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
+GET hf_internal/hf_blocked_sessions_ash_awr_internal.sql NOLIST
 .
 666666 SELECT ', [new Date('||
 666666        TO_CHAR(q.time, 'YYYY')|| /* year */
@@ -107,13 +107,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
---@@cs_internal/&&cs_set_container_to_curr_pdb.
+--@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

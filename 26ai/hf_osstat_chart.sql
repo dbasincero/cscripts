@@ -27,16 +27,16 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_osstat_chart';
 DEF cs_hours_range_default = '168';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
 COL stat_name FOR A25;
 COL value FOR 999,999,999,999,990;
@@ -71,7 +71,7 @@ COL cs_comments_3 NEW_V cs_comments_3 NOPRI;
 SELECT stat_name AS cs_stat_name_3, comments AS cs_comments_3 FROM v$osstat WHERE stat_name = TRIM('&&cs_stat_name_3.')
 /
 --
---@@cs_internal/&&cs_set_container_to_cdb_root.
+--@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
@@ -90,7 +90,7 @@ DEF chart_foot_note_3 = "<br>3) &&cs_stat_name_2. &&cs_comments_2.";
 DEF chart_foot_note_4 = "<br>4) &&cs_stat_name_3. &&cs_comments_3.<br>";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_stat_name_1." "&&cs_stat_name_2." "&&cs_stat_name_3."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&cs_stat_name_1.', id:'1', type:'number'}
 PRO ,{label:'&&cs_stat_name_2.', id:'2', type:'number'}
@@ -177,13 +177,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
---@@cs_internal/&&cs_set_container_to_curr_pdb.
+--@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

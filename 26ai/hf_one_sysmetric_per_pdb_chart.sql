@@ -26,18 +26,18 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_one_sysmetric_per_pdb_chart';
 DEF cs_hours_range_default = '168';
 --
-@@cs_internal/hf_sample_time_from_and_to.sql
-@@cs_internal/hf_snap_id_from_and_to.sql
+@@hf_internal/hf_sample_time_from_and_to.sql
+@@hf_internal/hf_snap_id_from_and_to.sql
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 COL metric_name FOR A40;
 COL metric_unit FOR A40;
 SELECT DISTINCT h.metric_name, h.metric_unit
@@ -48,7 +48,7 @@ SELECT DISTINCT h.metric_name, h.metric_unit
  ORDER BY
        h.metric_name, h.metric_unit
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 3. Metric Name: 
@@ -56,7 +56,7 @@ DEF cs_metric_name = '&3.';
 UNDEF 3;
 COL cs_metric_name NEW_V cs_metric_name NOPRI;
 COL cs_metric_unit NEW_V cs_metric_unit NOPRI;
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 SELECT h.metric_name AS cs_metric_name, h.metric_unit AS cs_metric_unit
   FROM dba_hist_con_sysmetric_summ h
  WHERE h.dbid = TO_NUMBER('&&cs_dbid.')
@@ -65,7 +65,7 @@ SELECT h.metric_name AS cs_metric_name, h.metric_unit AS cs_metric_unit
    AND h.metric_name = TRIM('&&cs_metric_name.')
    AND ROWNUM = 1
 /
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
 PRO
 PRO 4. Metric Value: [{average}|maxval]
@@ -79,7 +79,7 @@ COL cs_func NEW_V cs_func NOPRI;
 SELECT CASE '&&cs_metric_value.' WHEN 'average' THEN 'Average' WHEN 'maxval' THEN 'Maximum' ELSE 'Error' END AS cs_hea, CASE '&&cs_metric_value.' WHEN 'average' THEN 'AVG' WHEN 'maxval' THEN 'MAX' ELSE 'Error' END AS cs_func FROM DUAL
 /
 --
-@@cs_internal/&&cs_set_container_to_cdb_root.
+@@hf_internal/&&cs_set_container_to_cdb_root.
 --
 DEF con_id_01 = ' ';
 DEF con_id_02 = ' ';
@@ -219,7 +219,7 @@ DEF chart_foot_note_4 = "";
 DEF report_foot_note = "";
 DEF report_foot_note = 'SQL> @&&cs_script_name..sql "&&cs_sample_time_from." "&&cs_sample_time_to." "&&cs_metric_name." "&&cs_metric_value."';
 --
-@@cs_internal/hf_spool_head_chart.sql
+@@hf_internal/hf_spool_head_chart.sql
 --
 PRO ,{label:'&&pdb_name_01.', id:'01', type:'number'} 
 PRO ,{label:'&&pdb_name_02.', id:'02', type:'number'} 
@@ -328,13 +328,13 @@ DEF cs_oem_colors_slices = '//';
 -- for line charts
 DEF cs_curve_type = '//';
 --
-@@cs_internal/hf_spool_id_chart.sql
-@@cs_internal/hf_spool_tail_chart.sql
+@@hf_internal/hf_spool_id_chart.sql
+@@hf_internal/hf_spool_tail_chart.sql
 PRO
 PRO &&report_foot_note.
 --
-@@cs_internal/&&cs_set_container_to_curr_pdb.
+@@hf_internal/&&cs_set_container_to_curr_pdb.
 --
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --

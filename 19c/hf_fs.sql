@@ -26,11 +26,11 @@
 --
 ---------------------------------------------------------------------------------------
 --
-@@cs_internal/hf_primary.sql
-@@cs_internal/hf_cdb_warn.sql
-@@cs_internal/hf_set.sql
-@@cs_internal/hf_def.sql
-@@cs_internal/hf_file_prefix.sql
+@@hf_internal/hf_primary.sql
+@@hf_internal/hf_cdb_warn.sql
+@@hf_internal/hf_set.sql
+@@hf_internal/hf_def.sql
+@@hf_internal/hf_file_prefix.sql
 --
 DEF cs_script_name = 'cs_fs';
 --
@@ -62,9 +62,9 @@ SELECT CASE WHEN UPPER(TRIM('&&cs_include_sys.')) IN ('N', 'Y') THEN UPPER(TRIM(
 --
 SELECT '&&cs_file_prefix._&&cs_script_name.' cs_file_name FROM DUAL;
 --
-@@cs_internal/hf_spool_head.sql
+@@hf_internal/hf_spool_head.sql
 PRO SQL> @&&cs_script_name..sql "&&cs_search_string." "&&cs_awr_search_days." "&&cs_include_sys."
-@@cs_internal/hf_spool_id.sql
+@@hf_internal/hf_spool_id.sql
 --
 PRO SEARCH_STRING: "&&cs_search_string."
 PRO AWR_DAYS:      "&&cs_awr_search_days."
@@ -76,36 +76,36 @@ DEF cs_sql_id_col = 'PRI';
 DEF cs_uncommon_col = 'NOPRI';
 DEF cs_delta_col = 'NOPRI';
 DEF cs_execs_delta_h = '&&cs_last_snap_mins. mins';
-@@cs_internal/hf_latency_internal_cols.sql
-@@cs_internal/hf_fs_internal_query_1.sql
+@@hf_internal/hf_latency_internal_cols.sql
+@@hf_internal/hf_fs_internal_query_1.sql
 --
 -- 2 v$sqlstats - sql statistics
 --
-@@cs_internal/hf_latency_internal_cols.sql
+@@hf_internal/hf_latency_internal_cols.sql
 CLEAR BREAK;
-@@cs_internal/hf_fs_internal_query_2.sql
+@@hf_internal/hf_fs_internal_query_2.sql
 --
 -- 3 dba_hist_sqlstat - sql statistics
 --
 DEF cs_execs_delta_h = 'whole history';
-@@cs_internal/hf_latency_internal_cols.sql
+@@hf_internal/hf_latency_internal_cols.sql
 COL begin_timestamp FOR A23 HEA 'Begin Timestamp' PRI;
 COL end_timestamp FOR A23 HEA 'End Timestamp' PRI;
 CLEAR BREAK;
-@@cs_internal/hf_fs_internal_query_3.sql
+@@hf_internal/hf_fs_internal_query_3.sql
 --
 -- 4 v$sqlstats - sql text
 --
-@@cs_internal/hf_fs_internal_query_4.sql
+@@hf_internal/hf_fs_internal_query_4.sql
 --
 -- 5 dba_hist_sqltext - sql text
 --
-@@cs_internal/hf_fs_internal_query_5.sql
+@@hf_internal/hf_fs_internal_query_5.sql
 --
 PRO
 PRO SQL> @&&cs_script_name..sql "&&cs_search_string." "&&cs_awr_search_days." "&&cs_include_sys."
 --
-@@cs_internal/hf_spool_tail.sql
-@@cs_internal/hf_undef.sql
-@@cs_internal/hf_reset.sql
+@@hf_internal/hf_spool_tail.sql
+@@hf_internal/hf_undef.sql
+@@hf_internal/hf_reset.sql
 --
